@@ -7,7 +7,7 @@ The built-in Screenshot app can only record from a microphone. Earshot adds an i
 - No virtual audio driver (BlackHole, Soundflower), no Multi-Output Device, no sudo
 - Your output stays untouched: volume keys, AirPods and speakers all keep working
 - Set and forget: runs at login, restarts itself if anything goes wrong
-- ~120 lines of Swift, no dependencies
+- ~100 lines of Swift, no dependencies
 
 ## Requirements
 
@@ -38,7 +38,7 @@ macOS 14.2 added [Core Audio process taps](https://developer.apple.com/documenta
 
 Earshot runs as a LaunchAgent. It holds the device open and otherwise does nothing: no audio is processed unless something is recording from the device.
 
-The device is clocked from your Mac's built-in output, so it keeps working as you switch between speakers, headphones and AirPods.
+The device contains only the tap, so it's input-only: it never shows up as an output, and it keeps working as you switch between speakers, headphones and AirPods.
 
 ## Caveats
 

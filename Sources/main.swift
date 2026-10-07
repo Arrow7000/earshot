@@ -1,5 +1,7 @@
 // Earshot: exposes the system audio mix as a public input device ("System Audio")
 // using a Core Audio process tap wrapped in an aggregate device. Runs as a LaunchAgent.
+// The aggregate contains only the tap (no real sub-devices), so it is input-only and
+// never shows up as an output.
 import Foundation
 import CoreAudio
 import AudioToolbox
@@ -22,11 +24,6 @@ func addr(_ selector: AudioObjectPropertySelector,
     AudioObjectPropertyAddress(mSelector: selector, mScope: scope, mElement: kAudioObjectPropertyElementMain)
 }
 
-func getUInt32(_ obj: AudioObjectID, _ selector: AudioObjectPropertySelector) -> UInt32? {
-    var a = addr(selector); var v = UInt32(0); var size = UInt32(MemoryLayout<UInt32>.size)
-    return AudioObjectGetPropertyData(obj, &a, 0, nil, &size, &v) == noErr ? v : nil
-}
-
 func deviceUID(_ dev: AudioObjectID) -> String? {
     var a = addr(kAudioDevicePropertyDeviceUID)
     var uid: Unmanaged<CFString>? = nil; var size = UInt32(MemoryLayout<CFString>.size)
@@ -42,30 +39,12 @@ func allDevices() -> [AudioObjectID] {
     return devs
 }
 
-func hasOutputStreams(_ dev: AudioObjectID) -> Bool {
-    var a = addr(kAudioDevicePropertyStreams, kAudioObjectPropertyScopeOutput); var size = UInt32(0)
-    return AudioObjectGetPropertyDataSize(dev, &a, 0, nil, &size) == noErr && size > 0
-}
-
 func deviceForUID(_ uid: String) -> AudioObjectID? {
     allDevices().first { deviceUID($0) == uid }
 }
 
-// Clock the aggregate off the built-in speakers so it survives headphones/AirPods coming and going.
-func clockDeviceUID() -> String? {
-    if let builtIn = allDevices().first(where: {
-        getUInt32($0, kAudioDevicePropertyTransportType) == kAudioDeviceTransportTypeBuiltIn && hasOutputStreams($0)
-    }) { return deviceUID(builtIn) }
-    var a = addr(kAudioHardwarePropertyDefaultSystemOutputDevice)
-    var dev = AudioObjectID(0); var size = UInt32(MemoryLayout<AudioObjectID>.size)
-    guard AudioObjectGetPropertyData(system, &a, 0, nil, &size, &dev) == noErr else { return nil }
-    return deviceUID(dev)
-}
-
 // Remove a stale device left behind by a previous crash.
 if let stale = deviceForUID(aggregateUID) { AudioHardwareDestroyAggregateDevice(stale) }
-
-guard let clockUID = clockDeviceUID() else { log("no output device to clock from"); exit(1) }
 
 let tapDesc = CATapDescription(stereoGlobalTapButExcludeProcesses: [])
 tapDesc.name = "System Audio Tap"
@@ -77,17 +56,14 @@ check(AudioHardwareCreateProcessTap(tapDesc, &tapID), "create tap")
 let desc: [String: Any] = [
     kAudioAggregateDeviceNameKey: aggregateName,
     kAudioAggregateDeviceUIDKey: aggregateUID,
-    kAudioAggregateDeviceMainSubDeviceKey: clockUID,
     kAudioAggregateDeviceIsPrivateKey: false,
-    kAudioAggregateDeviceIsStackedKey: false,
     kAudioAggregateDeviceTapAutoStartKey: true,
-    kAudioAggregateDeviceSubDeviceListKey: [[kAudioSubDeviceUIDKey: clockUID]],
     kAudioAggregateDeviceTapListKey: [[kAudioSubTapDriftCompensationKey: true,
                                        kAudioSubTapUIDKey: tapDesc.uuid.uuidString]],
 ]
 var aggID = AudioObjectID(0)
 check(AudioHardwareCreateAggregateDevice(desc as CFDictionary, &aggID), "create aggregate")
-log("created \"\(aggregateName)\" (clock: \(clockUID))")
+log("created \"\(aggregateName)\"")
 
 func cleanup() {
     AudioHardwareDestroyAggregateDevice(aggID)
