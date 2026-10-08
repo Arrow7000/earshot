@@ -4,6 +4,7 @@
   <key>CFBundleIdentifier</key><string>arrow7000.earshot</string>
   <key>CFBundleName</key><string>Earshot</string>
   <key>CFBundleExecutable</key><string>earshot</string>
+  <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>0.1.0</string>
   <key>CFBundleVersion</key><string>1</string>

@@ -1,4 +1,6 @@
-# Earshot
+<p align="center"><img src="docs/icon.png" width="160" alt="Earshot icon"></p>
+
+<h1 align="center">Earshot</h1>
 
 **Record system audio with macOS Screenshot (⌘⇧5). No audio driver needed.**
 

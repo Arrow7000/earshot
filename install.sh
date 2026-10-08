@@ -19,7 +19,9 @@ fi
 
 echo "Building..."
 rm -rf build && mkdir -p "$BUILD/Contents/MacOS"
+mkdir -p "$BUILD/Contents/Resources"
 cp Resources/Info.plist "$BUILD/Contents/"
+cp Resources/AppIcon.icns "$BUILD/Contents/Resources/"
 for arch in arm64 x86_64; do
   swiftc -O -target "$arch-apple-macos14.2" Sources/main.swift -o "build/earshot-$arch"
 done
