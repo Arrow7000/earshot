@@ -42,7 +42,7 @@ The device contains only the tap, so it's input-only: it never shows up as an ou
 
 ## Caveats
 
-- **Other apps may record silence.** macOS checks System Audio Recording permission for the app *reading* the device, too. Screenshot is exempt, at least on macOS 26. Other apps (QuickTime, OBS, Zoom, ffmpeg) need that permission themselves: System Settings → Privacy & Security → Screen & System Audio Recording. If you get silence, that's almost always why.
+- **Other apps need System Audio Recording permission.** Screenshot is exempt (at least on macOS 26), but any other app reading System Audio must itself be allowed to record system audio. Apps that support this (e.g. Chrome) will ask the first time; just click Allow. Apps that don't (e.g. command-line tools like ffmpeg) silently get silence: add them, or the terminal running them, under System Settings → Privacy & Security → Screen & System Audio Recording → **System Audio Recording Only** (+). Note that the screen-recording list above it doesn't count.
 - **This relies on observed behavior.** Screenshot being able to read the device without its own permission isn't documented by Apple. A future macOS update could change it.
 - **System audio only.** Picking System Audio means your mic isn't recorded.
 - **Rebuilding re-prompts.** Earshot is ad-hoc signed, so macOS treats each rebuild as a new app and asks for permission again.
@@ -50,7 +50,7 @@ The device contains only the tap, so it's input-only: it never shows up as an ou
 ## Troubleshooting
 
 - **Device missing?** Check `~/Library/Logs/Earshot.log` and `launchctl print gui/$(id -u)/arrow7000.earshot`. Apps that were open while Earshot (re)started may need relaunching to see the device.
-- **Recording is silent?** Make sure Earshot is allowed under System Settings → Privacy & Security → Screen & System Audio Recording. To get the prompt again, run `tccutil reset AudioCapture arrow7000.earshot` then `./install.sh`.
+- **Recording is silent?** Make sure both Earshot *and the app you're recording with* are allowed under System Settings → Privacy & Security → Screen & System Audio Recording → System Audio Recording Only. To get the prompt again, run `tccutil reset AudioCapture arrow7000.earshot` then `./install.sh`.
 
 ## Prior art
 
