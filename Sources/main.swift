@@ -1,4 +1,4 @@
-// Inner Ear: exposes the system audio mix as a public input device ("System Audio")
+// InnerEar: exposes the system audio mix as a public input device ("System Audio")
 // using a Core Audio process tap wrapped in an aggregate device. Runs as a LaunchAgent.
 // The aggregate contains only the tap (no real sub-devices), so it is input-only and
 // never shows up as an output.

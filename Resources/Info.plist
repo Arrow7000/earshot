@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
   <key>CFBundleIdentifier</key><string>arrow7000.innerear</string>
-  <key>CFBundleName</key><string>Inner Ear</string>
+  <key>CFBundleName</key><string>InnerEar</string>
   <key>CFBundleExecutable</key><string>innerear</string>
   <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundlePackageType</key><string>APPL</string>
@@ -10,5 +10,5 @@
   <key>CFBundleVersion</key><string>1</string>
   <key>LSMinimumSystemVersion</key><string>14.2</string>
   <key>LSUIElement</key><true/>
-  <key>NSAudioCaptureUsageDescription</key><string>Inner Ear exposes your Mac's system audio as an input device so apps like Screenshot can record it.</string>
+  <key>NSAudioCaptureUsageDescription</key><string>InnerEar exposes your Mac's system audio as an input device so apps like Screenshot can record it.</string>
 </dict></plist>

@@ -1,17 +1,17 @@
 #!/bin/zsh
-# Build Inner Ear and install it as a login LaunchAgent.
+# Build InnerEar and install it as a login LaunchAgent.
 set -e
 cd "${0:A:h}"
 
 LABEL=arrow7000.innerear
-APP="$HOME/Library/Application Support/Inner Ear/Inner Ear.app"
+APP="$HOME/Library/Application Support/InnerEar/InnerEar.app"
 AGENT="$HOME/Library/LaunchAgents/$LABEL.plist"
 LOG="$HOME/Library/Logs/InnerEar.log"
-BUILD="build/Inner Ear.app"
+BUILD="build/InnerEar.app"
 
 autoload is-at-least
 if ! is-at-least 14.2 "$(sw_vers -productVersion)"; then
-  echo "Inner Ear needs macOS 14.2 or later." >&2; exit 1
+  echo "InnerEar needs macOS 14.2 or later." >&2; exit 1
 fi
 if ! command -v swiftc >/dev/null; then
   echo "swiftc not found. Install the Xcode Command Line Tools: xcode-select --install" >&2; exit 1
@@ -35,5 +35,5 @@ sed -e "s|__APP__|$APP|g" -e "s|__LOG__|$LOG|g" Resources/$LABEL.plist > "$AGENT
 launchctl bootstrap "gui/$(id -u)" "$AGENT"
 
 echo
-echo "Inner Ear is running. If macOS asks to let Inner Ear record system audio, click Allow."
+echo "InnerEar is running. If macOS asks to let InnerEar record system audio, click Allow."
 echo "Then in Screenshot (⌘⇧5) choose Options → Microphone → System Audio."
