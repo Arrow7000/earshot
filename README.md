@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/icon.png" width="160" alt="InnerEar icon"></p>
+<p align="center"><img src="docs/icon.png" width="280" alt="InnerEar icon"></p>
 
 <h1 align="center">InnerEar</h1>
 
