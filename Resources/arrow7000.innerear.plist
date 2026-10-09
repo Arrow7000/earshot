@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
-  <key>Label</key><string>arrow7000.earshot</string>
+  <key>Label</key><string>arrow7000.innerear</string>
   <key>ProgramArguments</key><array>
-    <string>__APP__/Contents/MacOS/earshot</string>
+    <string>__APP__/Contents/MacOS/innerear</string>
   </array>
-  <key>AssociatedBundleIdentifiers</key><string>arrow7000.earshot</string>
+  <key>AssociatedBundleIdentifiers</key><string>arrow7000.innerear</string>
   <key>RunAtLoad</key><true/>
   <key>KeepAlive</key><true/>
   <key>ProcessType</key><string>Background</string>

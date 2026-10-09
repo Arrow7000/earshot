@@ -1,4 +1,4 @@
-// Earshot: exposes the system audio mix as a public input device ("System Audio")
+// Inner Ear: exposes the system audio mix as a public input device ("System Audio")
 // using a Core Audio process tap wrapped in an aggregate device. Runs as a LaunchAgent.
 // The aggregate contains only the tap (no real sub-devices), so it is input-only and
 // never shows up as an output.
@@ -6,7 +6,7 @@ import Foundation
 import CoreAudio
 import AudioToolbox
 
-let aggregateUID = "arrow7000.earshot.device"
+let aggregateUID = "arrow7000.innerear.device"
 let aggregateName = "System Audio"
 let system = AudioObjectID(kAudioObjectSystemObject)
 
